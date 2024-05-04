@@ -51,6 +51,7 @@ class Bot(commands.Bot):
 
     async def event_message(self, ctx):
         'Runs every time a message is sent in chat.'
+        response="DEFAULT ERROR"
         chattername=ctx.author.name
         if not ctx.content.startswith('!'):
             # Prepare the messages for OpenAI Chat model

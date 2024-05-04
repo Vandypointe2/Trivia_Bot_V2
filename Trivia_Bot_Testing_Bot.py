@@ -3,7 +3,7 @@ import twitchio
 import random
 import io
 import requests 
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import os
 import gspread
 import json
@@ -14,7 +14,7 @@ import openai
 import aiohttp
 import json
 
-load_dotenv()
+#load_dotenv()
 
 
 class Bot(commands.Bot):
@@ -22,11 +22,13 @@ class Bot(commands.Bot):
     def __init__(self):
         # Initialise our Bot with our access token, prefix and a list of channels to join on boot...
         global trivia_switch,gpt_switch,credentials,gc,channel,bot_token,client_id,clip_api_authorization,broadcaster_id
-        credentials_json ='{"type": "service_account", "project_id": "named-purpose-364804", "private_key_id": "fd18ade9a874a54e88212e3411c6fc4ff626e29e", "private_key": "-----BEGIN PRIVATE KEY-----\\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCDV0dideAaEJ97\\no/1mZsNE5TBtnx+YFsFCMCenA+C+EgB2ECBtM7oDlU71I7KCzkto0LuRGVpXccKc\\nFD80VhI3gAKt9pDl27cVbMZIWonB1rrCJJEiakBMvVPxw3Xf9RzEl295Q6j9BZos\\n9hNJEpCKeXClSueHuK19YH1QXzu0JL+iWsyFdLVqbuKJ+2LSCJhAb2VHNTYVnW4N\\n0j3Sl5i8QcfJs072jPJhXh30smlLpNYM6wITSfMyEr6OVTk0ecV5j0Fu8NOADbif\\nN1XeQrfiH+gzZ1RmNHDiVMtZSSX3/Irgt+PNgew/o3VPIEQpWyxHZ191s2jRtctz\\nOULtYe91AgMBAAECggEAG7nRPzMAhagULrLZ46PWXWUfcci5T+8fyXPmbv6l0yH0\\nOHgjjEHy5t4+TogEX1Iiv6PusI0AUfzZFv88L3Vq/43VovktseRNtCdj/TKlqYaF\\nosW64J+65qhCAAOhzs8MzWBlfx0eH5mu6AZjYFXbruu/cJlNIozFDPZRReXwsdCR\\nurWMkKgbcZp7BEu5oYL4zR8cdUXrI7BEiy7fh+LHhAmDUr8xLTDaO2IFVOGxPvTP\\nsM/VXFTrXOxqVNcCaDML25vIKDqfOxsQEzw/97wVWhs8EU+ULAKV1x1dJZaOHnLH\\nSbRKoQ3AkF65P7uknH2OrCucaOm8QdSTmZgVqk13SQKBgQC5P0ktlbGcg+dkwNhJ\\n9q4FSBojzP9g8lAx/wZf9gujpIFgNjdRHWi0HyZ4w8+YyVt/ratEuQ/FCf5yjmCK\\naf8p4W3ZCEYSmZDU0c9chm/FWXj3vOJLAfjWi3KZXMjDhKjw2dAGSIVGsNICIlih\\nPtAr98CPRz73eCPE4yhCouWaTQKBgQC1gUH+rFITqiDpVygMXec1fXZtdY8MFqty\\n3jEyKCrXHWdwd5f9YOa1ioprZlWwvT1UgpdnhvltFl7MjXNX9gitQ0lW5VwPkjEF\\nAwLfeE6b4B1p1KlOGt+Bh+k+wB058xOLlbbpPXYdaVeMEFO9GNiwErGasLGH8AV0\\np5AwaI1tyQKBgGGtGOzMTYZ1loDtnh4Bz+hBCGdwJAf+PILgMYBPv/tdNkqAy9Id\\na6Pt+N8cgE3TfkdoTzJBUitXBa9pm0XgdgajMsSJNEmCZ3eP2YKz8CNi9gHKupdK\\nRub5SEfNQJ63SE0WzDVD7+JCQbmWWp1K/YDxdbsWmgDqfBHIpOXd9qrRAoGARHFW\\nentug93OhU8JWgh67E/APaxr4aoWwr0InhpJdU6wN9fRJ4nH1cNFSRSQ0ZG6s8h+\\n4VojakBaRRY93Xh4cyWBXVQl7/U3qOUmyy/prJvJW6QGp944U/b1PGVjX/vKbgNp\\nsvArPxH/ImDxwsfAxjx2Xpesik83L3MUSzzRwAkCgYAYoS4yBcK2aZQSEGha3DeC\\nYERpyAqhz74uTK1Z/E0TxbbjUSgP2cdU16JqhCjH8xIJ9kJ72erIc/5X3QvxU2rD\\ntplN1+ArVMhtkNOrCmdEEHXX1IUBpXU8+65EMfQ5rCM77eZeh/A3nB7X9wfHgcWg\\nfYJ+hURSpec9pvwvZjdSVw==\\n-----END PRIVATE KEY-----\\n", "client_email": "triviabot@named-purpose-364804.iam.gserviceaccount.com", "client_id": "110507197397821353523", "auth_uri": "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://oauth2.googleapis.com/token", "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs", "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/triviabot%40named-purpose-364804.iam.gserviceaccount.com", "universe_domain": "googleapis.com"}'
+        credentials_json =os.getenv('CREDS')
         openai.api_key=os.getenv('API_KEY')
         channel = os.getenv('CHANNEL')
-        client_id=os.getenv('CLIENT_ID')
         bot_token=os.getenv('BOT_TOKEN')
+        
+        
+        #client_id=os.getenv('CLIENT_ID')
         #broadcaster_id=os.getenv('BROADCASTER_ID')
         #clip_api_authorization=os.getenv('AUTH')
         #broadcaster_id='58187542'
@@ -54,14 +56,6 @@ class Bot(commands.Bot):
     async def event_message(self, ctx):
         'Runs every time a message is sent in chat.'
         chattername=ctx.author.name
-        # Make sure the bot processes commands first
-        # await self.handle_commands(ctx)
-
-        # Make sure the bot ignores itself and the streamer
-        # if ctx.author.name.lower() == self.nick.lower():
-        #     return
-
-        # You might want to add additional conditions here if you don't want to echo every message
         if not ctx.content.startswith('!'):
             # Prepare the messages for OpenAI Chat model
             messages = [

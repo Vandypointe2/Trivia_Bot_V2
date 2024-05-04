@@ -51,8 +51,14 @@ class Bot(commands.Bot):
 
     async def event_message(self, ctx):
         'Runs every time a message is sent in chat.'
-        response="DEFAULT ERROR"
+        # Make sure the bot processes commands first
+        await self.handle_commands(ctx)
+
+        # Make sure the bot ignores itself and the streamer
+        if ctx.author.name.lower() == self.nick.lower():
+             return
         chattername=ctx.author.name
+        # You might want to add additional conditions here if you don't want to echo every message
         if not ctx.content.startswith('!'):
             # Prepare the messages for OpenAI Chat model
             messages = [

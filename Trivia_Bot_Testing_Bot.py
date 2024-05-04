@@ -1,8 +1,5 @@
 from twitchio.ext import commands
-import twitchio
 import random
-import io
-import requests 
 #from dotenv import load_dotenv
 import os
 import gspread
@@ -11,7 +8,6 @@ import asyncio
 from datetime import datetime, timedelta
 from typing import Dict
 import openai
-import aiohttp
 import json
 
 #load_dotenv()

@@ -63,7 +63,7 @@ class Bot(commands.Bot):
             # Prepare the messages for OpenAI Chat model
             messages = [
                 {"role": "system", "content": (
-                    "You are a bot that Translates any other languages to English, When you are given text to translate it, check if it is english first. If it is english then just respond with ENG, otherwise translate the text you were given to english and only send that back as the response. ")},
+                    "You are a bot that Translates any other languages to English, When you are given text to translate it, Check what language the text is. If it is almost all english then just respond with ENG, otherwise translate the text you were given to english and only send that back as the response. The goal is to only translate if the text is clearly almost all in another language other than english. ")},
                 {"role": "user", "content": ctx.content}
             ]
 

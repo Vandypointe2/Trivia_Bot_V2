@@ -66,10 +66,13 @@ class Bot(commands.Bot):
             # Prepare the messages for OpenAI Chat model
             messages = [
                 {"role": "system", "content": (
-                    "You are a bot that Translates any other languages to English, When you are given text to translate it, Check what language the text is. If it is english then just respond with ENG, otherwise translate the text you were given to english and only send that back as the response. ")},
+                    "You are a translation bot. Your task is to identify the language of a given message and translate it to English if it is not already in English. Follow these rules precisely:\n\n"
+                "1. If the message is in English, respond with 'ENG'.\n"
+                "2. If the message is in a language other than English, translate it to English and provide only the translated text as the response.\n"
+                "3. Do not respond with the original message or any additional text other than the translation.\n"
+                "4. Ensure that the detection of the language is accurate to avoid unnecessary translations of English messages.")},
                 {"role": "user", "content": ctx.content}
             ]
-
             # Call OpenAI API
             try:
                 openai_response = openai.ChatCompletion.create(

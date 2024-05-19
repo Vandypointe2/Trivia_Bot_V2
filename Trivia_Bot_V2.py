@@ -1,6 +1,5 @@
 from twitchio.ext import commands
 import random
-#from dotenv import load_dotenv
 import os
 import gspread
 import json
@@ -10,7 +9,6 @@ from typing import Dict
 import openai
 import json
 
-#load_dotenv()
 
 
 class Bot(commands.Bot):
@@ -22,12 +20,6 @@ class Bot(commands.Bot):
         openai.api_key=os.getenv('API_KEY')
         channel = os.getenv('CHANNEL')
         bot_token=os.getenv('BOT_TOKEN')
-        
-        
-        #client_id=os.getenv('CLIENT_ID')
-        #broadcaster_id=os.getenv('BROADCASTER_ID')
-        #clip_api_authorization=os.getenv('AUTH')
-        #broadcaster_id='58187542'
 
         
         super().__init__(token=bot_token, prefix='!', initial_channels=[channel],case_insensitive=True)
@@ -397,28 +389,6 @@ class Bot(commands.Bot):
                     hint += char
         await ctx.send(f"The hint for the answer is: {hint}")
 
-
-    # @commands.command(name='getclips')
-    # async def fetch_clips(self, ctx):
-    #     """Fetch top clips for a broadcaster."""
-    #     url = f"https://api.twitch.tv/helix/clips?broadcaster_id={broadcaster_id}&first=10"
-    #     headers = {
-    #         'Client-ID': client_id,
-    #         'Authorization': f'Bearer {clip_api_authorization}'
-    #     }
-    #     # Make the HTTP request to Twitch API
-    #     response = requests.get(url, headers=headers)
-    #     if response.status_code == 200:
-    #         clips = response.json().get('data', [])
-    #         if clips:
-    #             # Formatting the clip information
-    #             clip_details = '\n'.join([f"{clip['title']} - {clip['url']}" for clip in clips])
-    #             await ctx.send(f"Top clips:\n{clip_details}")
-    #         else:
-    #             await ctx.send("No clips found.")
-    #     else:
-    #         await ctx.send("Failed to fetch clips.")
-    #         print(response)
     
         
 

@@ -178,7 +178,7 @@ class Bot(commands.Bot):
             global translate_flag
             translate_flag = 1 if translate_flag == 0 else 0
             print(f"Translator value: {translate_flag}")
-            await ctx.send(f"Translator is now {'On' if gpt_switch == 1 else 'Off'}")
+            await ctx.send(f"Translator is now {'On' if translate_flag == 1 else 'Off'}")
         else:
             await ctx.send("Sorry, only mods and the channel owner can run this command.")
 

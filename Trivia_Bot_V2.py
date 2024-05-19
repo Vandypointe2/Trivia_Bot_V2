@@ -17,7 +17,7 @@ class Bot(commands.Bot):
 
     def __init__(self):
         # Initialise our Bot with our access token, prefix and a list of channels to join on boot...
-        global trivia_switch,gpt_switch,credentials,gc,channel,bot_token,client_id,clip_api_authorization,broadcaster_id
+        global trivia_switch,gpt_switch,credentials,gc,channel,bot_token,translate_flag,client_id,clip_api_authorization,broadcaster_id
         credentials_json =os.getenv('CREDS')
         openai.api_key=os.getenv('API_KEY')
         channel = os.getenv('CHANNEL')
@@ -35,6 +35,7 @@ class Bot(commands.Bot):
         self.user_scores = {}
         trivia_switch=1
         gpt_switch=1
+        translate_flag=1
         credentials = json.loads(credentials_json)
         gc = gspread.service_account_from_dict(credentials)
         
@@ -53,6 +54,8 @@ class Bot(commands.Bot):
         'Runs every time a message is sent in chat.'
         # Make sure the bot processes commands first
         await self.handle_commands(ctx)
+        if translate_flag == 0:
+            return
 
         # Make sure the bot ignores itself and the streamer
         if ctx.author.name.lower() == self.nick.lower():
@@ -171,6 +174,16 @@ class Bot(commands.Bot):
             gpt_switch = 1
             print(f"gpt_switch value: {gpt_switch}")
             await ctx.send("GPT is now On")
+        else:
+            await ctx.send("Sorry, only mods and the channel owner can run this command.")
+
+    @commands.command(name='Translator')
+    async def translator_command(self, ctx):
+        if ctx.author.is_mod or ctx.author.name == ctx.channel.name:
+            global translate_flag
+            translate_flag = 1 if translate_flag == 0 else 0
+            print(f"Translator value: {translate_flag}")
+            await ctx.send(f"Translator is now {'On' if gpt_switch == 1 else 'Off'}")
         else:
             await ctx.send("Sorry, only mods and the channel owner can run this command.")
 
